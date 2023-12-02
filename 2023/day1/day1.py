@@ -1,9 +1,11 @@
+from helpers import getDailyInputByFolderName
+
 # Day 1 :)
-D = open("d1Input.txt", "r").read()
+D = getDailyInputByFolderName()
 part1Sum = 0
 part2Sum = 0
 
-for line in D.split('\n'):
+for line in D:
   part1Nums = []
   part2Nums = []
 

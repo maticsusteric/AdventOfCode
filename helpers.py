@@ -34,3 +34,56 @@ def getDailyInputByFolderName():
         # Handle unsuccessful request
         print(f"Error: Unable to fetch data. Status code: {response.status_code}")
         return None
+
+
+def getDailyInputByFolderNameWithParam(splitStr: str):
+    # Get basename of current -> ('day' folder)
+    day_folder_name = os.path.basename(os.getcwd())
+    # Strip (we only need number of day)
+    day_num = day_folder_name.lstrip('day')
+
+    # Get the parent folders base name -> ('year' folder)
+    year_folder_name = os.path.basename(os.path.dirname(os.getcwd()))
+    # Create input url from base path + year + numDay
+    input_url = INPUT_BASE_PATH + year_folder_name + '/day/' + day_num + '/input'
+
+    headers = {'User-Agent': USER_AGENT}
+    cookies = {'session': SESSION}
+    response = requests.get(input_url, headers=headers, cookies=cookies)
+
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        result = response.text.split(splitStr)
+        # Get rid of excess empty string
+        result.pop()
+        return result
+    else:
+        # Handle unsuccessful request
+        print(f"Error: Unable to fetch data. Status code: {response.status_code}")
+        return None
+
+
+def getDailyInputByFolderNoParsing():
+    # Get basename of current -> ('day' folder)
+    day_folder_name = os.path.basename(os.getcwd())
+    # Strip (we only need number of day)
+    day_num = day_folder_name.lstrip('day')
+
+    # Get the parent folders base name -> ('year' folder)
+    year_folder_name = os.path.basename(os.path.dirname(os.getcwd()))
+    # Create input url from base path + year + numDay
+    input_url = INPUT_BASE_PATH + year_folder_name + '/day/' + day_num + '/input'
+
+    headers = {'User-Agent': USER_AGENT}
+    cookies = {'session': SESSION}
+    response = requests.get(input_url, headers=headers, cookies=cookies)
+
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        result = response.text
+        # Get rid of excess empty string
+        return result
+    else:
+        # Handle unsuccessful request
+        print(f"Error: Unable to fetch data. Status code: {response.status_code}")
+        return None
